@@ -1,0 +1,7 @@
+# ninja log v5
+1	548	7179747647266944	CMakeFiles/homework1.dir/main.cpp.obj	8eaff2e98ee76ff
+8	550	7179747647271956	CMakeFiles/homework1.dir/print.cpp.obj	745d796d4832505e
+1	386	7179748402040336	CMakeFiles/homework1.dir/RollRate.cpp.obj	c914b3c4f0145393
+386	600	7179748404055103	homework1.exe	a97840283a06685
+11	379	7179748608879966	CMakeFiles/homework1.dir/RollRate.cpp.obj	c914b3c4f0145393
+380	484	7179748609715709	homework1.exe	a97840283a06685
