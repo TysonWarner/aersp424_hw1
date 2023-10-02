@@ -1,1 +1,1 @@
-double RollRate();
+double RollRate(int question);
