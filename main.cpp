@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <map>
+#include <array>
 #include "print.h"
 #include "RollRate.h"
 
@@ -86,12 +88,38 @@ int main()
 	w = update_weights(alpha, w, dw);
 
 	// QUESTION 8
+	array<string, 8> aircraft_name_array{ "M-346 Master", "AT-402B", "MB-326",
+		"AT-502B","MB-339","AT-602","Aero L-159 Alca","AT-504" };
+	map<int, string> aircraft_name;
+	for (int i = 0; i < aircraft_name_array.size(); i++)
+	{
+		aircraft_name[i] = aircraft_name_array[i];
+	}
+	
+	array<double, 8> approach_speed{ 124.0,74.0,103.0,77.0,104.0,92.0,130.0,73.0 };
+	array<double, 8> wingspan{ 31.89,51.08,34.67,52.0,35.63,56.0,31.29,52.0 };
+	array<double, 8> mtow{ 20.945,9.17,8.3,9.4,13.0,12.5,17.637,9.6 };
+	array<double, 8> engine_type{ 1,0,1,0,1,0,1,0 };
 
-
-
-
-
-
+	alpha = 0.001;
+	for (int i = 0; i < aircraft_name_array.size(); i++)
+	{
+		x = { approach_speed[i],wingspan[i],mtow[i] };
+		w = { 0.0001,0.0001,0.0001 };
+		y = engine_type[i];
+		
+		double sigma = sigmoid(z);
+		double sigmaprime = gradient_sigmoid(sigma);
+		for (int j = 0; j < 1000; j++)
+		{
+			z = dotproduct(w, x);
+			sigma = sigmoid(z);
+			sigmaprime = gradient_sigmoid(sigma);
+			dw = gradient_weights(sigma, sigmaprime, y, x);
+			w = update_weights(alpha, w, dw);
+		}
+	}
+	// QUESTION 9
 
 
 
