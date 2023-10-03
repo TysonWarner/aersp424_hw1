@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include "print.h"
 #include "RollRate.h"
 
@@ -13,6 +14,16 @@ double dotproduct(vector<double> w, vector<double> x)
 		z = z + w[i] * x[i];
 	}
 	return z;
+}
+double sigmoid(double z)
+{
+	double sigma = 1 / (1 + exp(-z));
+	return sigma;
+}
+double gradientcost(double sigma)
+{
+	double sigmaprime = sigma * (1 - sigma);
+	return sigmaprime;
 }
 int main()
 {
@@ -38,8 +49,13 @@ int main()
 	w = { 0.0001,0.0001,0.0001 };
 	x = { 124,31.89,20.945 };
 	double z = dotproduct(w, x);
-	cout << z << endl;
+
+	// QUESTION 5
+	double sigma = sigmoid(z);
+	double sigmaprime = gradientcost(sigma);
 #endif
+	// QUIESTION 6
+
 
 
 
