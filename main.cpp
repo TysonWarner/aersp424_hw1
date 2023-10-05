@@ -17,21 +17,25 @@ double dotproduct(vector<double> w, vector<double> x)
 	}
 	return z;
 }
+
 double sigmoid(double z)
 {
 	double sigma = 1 / (1 + exp(-z));
 	return sigma;
 }
+
 double gradient_sigmoid(double sigma)
 {
 	double sigmaprime = sigma * (1 - sigma);
 	return sigmaprime;
 }
+
 double gradient_cost(double y_predict, double y)
 {
 	double dC = 2 * (y_predict - y);
 	return dC;
 }
+
 vector<double> gradient_weights(double sigma, double sigmaprime, double y, vector<double> x)
 {
 	vector<double> dw(x.size());
@@ -41,6 +45,7 @@ vector<double> gradient_weights(double sigma, double sigmaprime, double y, vecto
 	}
 	return dw;
 }
+
 vector<double> update_weights(double alpha, vector<double> w, vector<double> dw)
 {
 	for (int i = 0; i < w.size(); i++)
@@ -49,6 +54,8 @@ vector<double> update_weights(double alpha, vector<double> w, vector<double> dw)
 	}
 	return w;
 }
+
+
 int main()
 {
 #if 0
@@ -88,28 +95,20 @@ int main()
 	w = update_weights(alpha, w, dw);
 
 	// QUESTION 8
-	array<string, 8> aircraft_name_array{ "M-346 Master", "AT-402B", "MB-326",
+	vector<string> aircraft_name{ "M-346 Master", "AT-402B", "MB-326",
 		"AT-502B","MB-339","AT-602","Aero L-159 Alca","AT-504" };
-	map<int, string> aircraft_name;
-	for (int i = 0; i < aircraft_name_array.size(); i++)
-	{
-		aircraft_name[i] = aircraft_name_array[i];
-	}
-	
-	array<double, 8> approach_speed{ 124.0,74.0,103.0,77.0,104.0,92.0,130.0,73.0 };
-	array<double, 8> wingspan{ 31.89,51.08,34.67,52.0,35.63,56.0,31.29,52.0 };
-	array<double, 8> mtow{ 20.945,9.17,8.3,9.4,13.0,12.5,17.637,9.6 };
-	array<double, 8> engine_type{ 1,0,1,0,1,0,1,0 };
+
+	vector<double> approach_speed{ 124.0,74.0,103.0,77.0,104.0,92.0,130.0,73.0 };
+	vector<double> wingspan{ 31.89,51.08,34.67,52.0,35.63,56.0,31.29,52.0 };
+	vector<double> mtow{ 20.945,9.17,8.3,9.4,13.0,12.5,17.637,9.6 };
+	vector<double> engine_type{ 1,0,1,0,1,0,1,0 };
 
 	alpha = 0.001;
-	for (int i = 0; i < aircraft_name_array.size(); i++)
+	w = { 0.0001,0.0001,0.0001 };
+	for (int i = 0; i < aircraft_name.size(); i++)
 	{
 		x = { approach_speed[i],wingspan[i],mtow[i] };
-		w = { 0.0001,0.0001,0.0001 };
 		y = engine_type[i];
-		
-		double sigma = sigmoid(z);
-		double sigmaprime = gradient_sigmoid(sigma);
 		for (int j = 0; j < 1000; j++)
 		{
 			z = dotproduct(w, x);
@@ -119,11 +118,30 @@ int main()
 			w = update_weights(alpha, w, dw);
 		}
 	}
+
+	cout << w[0] << endl;
+	cout << w[1] << endl;
+	cout << w[2] << endl;
+
 	// QUESTION 9
-
-
-
-
-
+	aircraft_name.insert(aircraft_name.end(), { "SF50 Vision", "208 Caravan", "Aero L-29 Delfin", "AT-802U" });
+	approach_speed.insert(approach_speed.end(), { 87.0,79.0,92.0,91.0 });
+	wingspan.insert(wingspan.end(), { 38.67,52.08,33.75,59.25 });
+	mtow.insert(mtow.end(), { 6.0,8.0,7.804,16.0 });
+	for (int i = aircraft_name.size() - 4; i < aircraft_name.size(); i++)
+	{
+		x = { approach_speed[i],wingspan[i],mtow[i] };
+		z = dotproduct(w, x);
+		y_predict = sigmoid(z);
+		//cout << y_predict << endl;
+		//if (y_predict > 0.5)
+		//{
+		//	engine_type.push_back(1); print("Jet");
+		//}
+		//else
+		//{
+		//	engine_type.push_back(0); print("Turboprop");
+		//}
+	}
 	return 0;
 }
